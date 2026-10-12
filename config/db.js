@@ -1,27 +1,57 @@
+// import mongoose from "mongoose";
+
+// let cached=global.mongoose
+
+// if(!cached){
+//     cached=global.mongoose={conn:null, promise:null}
+// }
+
+// async function connectDB(){
+
+//     if(cached.conn){
+//         return cached.conn
+//     }
+//     if(!cached.promise){
+//         const opts={
+//             bufferCommands:false
+//         }
+
+//         cached.promise=(await mongoose.connect(`${process.env.MONGODB_URI}/StanleyCart`,opts)).then(mongoose=>{return mongoose})
+
+//     }
+//     cached.conn=await cached.promise
+//     return cached.conn
+// }
+
+
+// export  default connectDB
+
+
 import mongoose from "mongoose";
 
-let cached=global.mongoose
+let cached = global.mongoose;
 
-if(!cached){
-    cached=global.mongoose={conn:null, promise:null}
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
 }
 
-async function connectDB(){
+async function connectDB() {
+  if (cached.conn) {
+    return cached.conn;
+  }
 
-    if(cached.conn){
-        return cached.conn
-    }
-    if(!cached.promise){
-        const opts={
-            bufferCommands:false
-        }
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+    };
 
-        cached.promise=(await mongoose.connect(`${process.env.MONGODB_URI}/StanleyCart`,opts)).then(mongoose=>{return mongoose})
+    cached.promise = mongoose
+      .connect(`${process.env.MONGODB_URI}/StanleyCart`, opts)
+      .then((mongoose) => mongoose);
+  }
 
-    }
-    cached.conn=await cached.promise
-    return cached.conn
+  cached.conn = await cached.promise;
+  return cached.conn;
 }
 
-
-export  default connectDB
+export default connectDB;
