@@ -21,7 +21,7 @@ export async function POST(request){
         },0);
         await inngest.send({
             name:'order/created',
-            daa:{
+            data:{
                 userId,address,items,amount:amount + Math.floor(amount*0.02),date:Date.now()
             }
         });
