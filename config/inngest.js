@@ -159,7 +159,10 @@ export const CreateUserOrder = inngest.createFunction(
     }));
 
     await connectDB();
-    await Order.insertMany(orders);
+    console.log("Database:", Order.db.name);
+console.log("Orders to insert:", orders);
+   const result= await Order.insertMany(orders);
+    console.log("Inserted orders:", result.length);
 
     return { success: true, processed: orders.length };
   }
